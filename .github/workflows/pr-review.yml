@@ -11,5 +11,5 @@ jobs:
       - uses: actions-cool/pr-review@main
         with: 
           token: ${{ secrets.GITHUB_TOKEN }}
-          comment: |
+          approve_comment: |
             HI @${{ github.event.pull_request.user.login }}, approve
