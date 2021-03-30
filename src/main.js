@@ -7,7 +7,8 @@ async function run() {
     const token = core.getInput('token');
     const octokit = new Octokit({ auth: `token ${token}` });
     const context = github.context;
-
+    console.log('token', token);
+    console.log('eventName', context.eventName);
     const { owner, repo } = context.repo;
     const number = context.payload.pull_request.number;
 
