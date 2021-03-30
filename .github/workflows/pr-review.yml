@@ -1,14 +1,11 @@
-name: PR Approve
+name: PR Review
 
 on:
   pull_request:
     types: [opened, edited, reopened]
 
 jobs:
-  welcome:
+  review:
     runs-on: ubuntu-latest
     steps:
       - uses: actions-cool/pr-review@main
-        with: 
-          approve_comment: |
-            HI @${{ github.event.pull_request.user.login }}, approve
