@@ -7250,28 +7250,33 @@ const core = __nccwpck_require__(186);
 const { Octokit } = __nccwpck_require__(375);
 const github = __nccwpck_require__(438);
 
+const events = ['APPROVE', 'REQUEST_CHANGES', 'COMMENT'];
+
 async function run() {
   try {
     const token = core.getInput('token');
     const octokit = new Octokit({ auth: `token ${token}` });
     const context = github.context;
-    core.info(`token: ${token},eventName: ${context.eventName}`);
+
     const { owner, repo } = context.repo;
     const number = context.payload.pull_request.number;
+
+    const approve_body = core.getInput('approve_comment');
 
     await octokit.pulls.createReview({
       owner,
       repo,
       pull_number: number,
-      event: 'APPROVE',
-      body: '1234',
-    })
+      event: events[0],
+      body: approve_body,
+    });
   } catch (error) {
     core.setFailed(error.message);
   }
 }
 
 run();
+
 
 /***/ }),
 
