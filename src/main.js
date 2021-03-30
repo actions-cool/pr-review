@@ -1,17 +1,27 @@
 const core = require('@actions/core');
+const { Octokit } = require('@octokit/rest');
+const github = require('@actions/github');
+
+const token = core.getInput('token');
+const octokit = new Octokit({ auth: `token ${token}` });
+const context = github.context;
+
+const events = ['APPROVE', 'REQUEST_CHANGES', 'COMMENT'];
 
 async function run() {
   try {
-    const ms = core.getInput('milliseconds');
-    core.debug(`Waiting ${ms} milliseconds ...`); // debug is only output if you set the secret `ACTIONS_RUNNER_DEBUG` to true
+    const { owner, repo } = context.repo;
+    const number = context.payload.pull_request.number;
 
-    core.debug(new Date().toTimeString());
-    await new Promise(resolve => {
-      setTimeout(() => resolve('done!'), 10);
+    const approve_body = core.getInput('approve_comment');
+
+    await octokit.pulls.createReview({
+      owner,
+      repo,
+      pull_number: number,
+      event: events[0],
+      body: approve_body,
     });
-    core.debug(new Date().toTimeString());
-
-    core.setOutput('time', new Date().toTimeString());
   } catch (error) {
     core.setFailed(error.message);
   }
