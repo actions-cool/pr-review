@@ -27,7 +27,7 @@ async function run() {
       event: type,
       comments: [
         {
-          path: '/',
+          path: 'README.md',
           body: comment,
         },
       ],
