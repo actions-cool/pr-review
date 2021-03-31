@@ -8,8 +8,15 @@ jobs:
   approve:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions-cool/pr-approve@main
+        with: 
+          token: ${{ secrets.GITHUB_TOKEN }}
+          comment: |
+            HI @${{ github.event.pull_request.user.login }}, approve
+
       - uses: actions-cool/pr-review@main
         with: 
           token: ${{ secrets.GITHUB_TOKEN }}
-          approve_comment: |
-            HI @${{ github.event.pull_request.user.login }}, approve
+          type: COMMENT
+          comment: |
+            HI @${{ github.event.pull_request.user.login }}, comment

@@ -7261,14 +7261,22 @@ async function run() {
     const { owner, repo } = context.repo;
     const number = context.payload.pull_request.number;
 
-    const approve_body = core.getInput('approve_comment');
+    const comment = core.getInput('comment');
+    const type = core.getInput('type');
+
+    if(!events.includes(type)) {
+      core.info('Wrong review, please use APPROVE or REQUEST_CHANGES or COMMENT')
+    }
 
     await octokit.pulls.createReview({
       owner,
       repo,
       pull_number: number,
-      event: events[0],
-      body: approve_body,
+      event: type,
+      comments: [{
+        path: '/',
+        body: comment
+      }]
     });
   } catch (error) {
     core.setFailed(error.message);
