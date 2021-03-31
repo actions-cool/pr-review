@@ -7264,8 +7264,8 @@ async function run() {
     const comment = core.getInput('comment');
     const type = core.getInput('type');
 
-    if(!events.includes(type)) {
-      core.info('Wrong review, please use APPROVE or REQUEST_CHANGES or COMMENT')
+    if (!events.includes(type)) {
+      core.info('Wrong review, please use APPROVE or REQUEST_CHANGES or COMMENT');
     }
 
     await octokit.pulls.createReview({
@@ -7273,10 +7273,13 @@ async function run() {
       repo,
       pull_number: number,
       event: type,
-      comments: [{
-        path: '/',
-        body: comment
-      }]
+      comments: [
+        {
+          path: 'README.md',
+          position: '1',
+          body: comment,
+        },
+      ],
     });
   } catch (error) {
     core.setFailed(error.message);
