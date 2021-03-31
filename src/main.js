@@ -28,7 +28,7 @@ async function run() {
       comments: [
         {
           path: 'README.md',
-          position: 1,
+          position: 4,
           body: comment,
         },
       ],
