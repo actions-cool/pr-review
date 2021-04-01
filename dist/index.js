@@ -7263,6 +7263,8 @@ async function run() {
 
     const comment = core.getInput('comment');
     const type = core.getInput('type');
+    const postition = core.getInput('position') || 1;
+    const path = core.getInput('path');
 
     if (!events.includes(type)) {
       core.info('Wrong review, please use APPROVE or REQUEST_CHANGES or COMMENT');
@@ -7275,8 +7277,8 @@ async function run() {
       event: type,
       comments: [
         {
-          path: 'README.md',
-          position: 4,
+          path,
+          position,
           body: comment,
         },
       ],

@@ -18,5 +18,16 @@ jobs:
         with: 
           token: ${{ secrets.GITHUB_TOKEN }}
           type: COMMENT
+          position: 4
+          path: README.md
           comment: |
             HI @${{ github.event.pull_request.user.login }}, comment
+
+      - uses: actions-cool/pr-review@main
+        with: 
+          token: ${{ secrets.GITHUB_TOKEN }}
+          type: REQUEST_CHANGES
+          path: README.md
+          position: 4
+          comment: |
+            HI @${{ github.event.pull_request.user.login }}, request_changes
