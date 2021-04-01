@@ -7263,7 +7263,7 @@ async function run() {
 
     const comment = core.getInput('comment');
     const type = core.getInput('type');
-    const position = core.getInput('position') || 1;
+    const position = Number(core.getInput('position')) || 1;
     const path = core.getInput('path');
 
     if (!events.includes(type)) {
